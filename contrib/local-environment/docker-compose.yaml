@@ -9,6 +9,8 @@
 #    make <command> (eg. make up, make down)
 #
 # Access http://oauth2-proxy.localtest.me:4180 to initiate a login cycle
+# Access http://oauth2-proxy-2.localtest.me:4181 to test the second proxy instance
+# Both proxies share the same cookie secret and domain, allowing cookie sharing
 version: '3.0'
 services:
   oauth2-proxy:
@@ -21,6 +23,22 @@ services:
     restart: unless-stopped
     ports:
       - 4180:4180/tcp
+    networks:
+      dex: {}
+      httpbin: {}
+    depends_on:
+      - dex
+      - httpbin
+  oauth2-proxy-2:
+    container_name: oauth2-proxy-2
+    image: quay.io/oauth2-proxy/oauth2-proxy:v7.9.0
+    command: --config /oauth2-proxy-2.cfg
+    hostname: oauth2-proxy-2
+    volumes:
+      - "./oauth2-proxy-2.cfg:/oauth2-proxy-2.cfg"
+    restart: unless-stopped
+    ports:
+      - 4181:4180/tcp
     networks:
       dex: {}
       httpbin: {}

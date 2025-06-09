@@ -23,6 +23,11 @@ staticClients:
   - 'http://oauth2-proxy.oauth2-proxy.localhost/oauth2/callback' # For nginx and traefik example.
   name: 'OAuth2 Proxy'
   secret: b2F1dGgyLXByb3h5LWNsaWVudC1zZWNyZXQK
+- id: oauth2-proxy-2
+  redirectURIs:
+  - 'http://oauth2-proxy-2.localtest.me:4181/oauth2/callback' # For second proxy instance.
+  name: 'OAuth2 Proxy 2'
+  secret: b2F1dGgyLXByb3h5LWNsaWVudC1zZWNyZXQK
 enablePasswordDB: true
 staticPasswords:
 - email: "admin@example.com"
